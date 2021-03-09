@@ -1,0 +1,172 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define pb push_back
+#define ff first
+#define ss second
+#define ii insert
+#define fastio ios::sync_with_stdio(false), cin.tie(NULL);
+const int N=1e6+5;
+const int mod=1e9+7;
+#define rep(i,j,k) for(ll i=j;i<=k;i++)
+#define repr(i,j,k) for(ll i=j;i>=k;i--)
+using namespace std;
+vector<int>v[N];
+ll row4[]={0,1,-1,0};// for 4 directions(not diagonals)
+ll col4[]={-1,0,0,1};// for 4 directions(not diagonals)
+int row8[] = {-1,-1,-1,0,0,0,1,1,1};//for 8 directions(including directions)
+int col8[] = {-1,0,1,-1,0,1,-1,0,1};//for 8 directions(including directions)
+ll vis[N]={0},parent[N],par[N],sz[N],mn[N],mx[N];
+ll dp[N];
+int n;
+bool prime[100005];
+ll ans;
+bool isvalid(int i,int j)
+{
+    if(i>=0 && i<n && j>=0 && j<n)
+    return true;
+    return false;
+}
+//source->geeks for geeks
+void SieveOfEratosthenes(int n) //total number of prime numbers upto n is stored in dp[n]
+{ dp[1]=0;
+dp[2]=1;
+
+    memset(prime, true, sizeof(prime));
+
+    for (int p=2; p*p<=n; p++)
+    {
+        if (prime[p] == true)
+        {
+            for (int i=p*p; i<=n; i += p)
+                prime[i] = false;
+        }
+    }
+    for (int p=3; p<=n; p++)
+       {if (prime[p])
+         dp[p]=dp[p-1]+1;
+         else
+         dp[p]=dp[p-1];
+       }
+}
+bool checkprime(ll n)//O(sqrt(n))
+{
+    for(int i=2;i*i<=n;i++)
+    {
+        if(n%i==0)
+            return false;
+    }
+    return true;
+}
+void dfs(ll k)
+{
+    vis[k]=1;
+    for(ll i:v[k])
+    {
+        if(!vis[i])
+        {
+            ans++;
+            dfs(i);
+        }
+    }
+}
+void findParents(int u, int par){//paas function findParents(1,-1)
+    parent[u] = par;
+    for(auto x: v[u])
+        if(x != par)
+            findParents(x, u);
+}
+int funpar(int x)//initially par[i]=i for all i values
+{
+   if(x!=par[x])
+   {
+      par[x]=funpar(par[x]);
+   }
+   return par[x];
+}
+void uniona(int x,int v)//initially sz[i]=1 for all i values.(sz is size of group)
+{
+   int a=funpar(x);
+   int b=funpar(v);
+   if(a==b)
+   return;
+   if(sz[a]>=sz[b])
+   {
+      sz[a]=sz[a]+sz[b];//the smaller size is added into larger one
+      mx[a]=max(mx[a],mx[b]);//finding minimum value of the group
+      mn[a]=min(mn[a],mn[b]);//finding maximum value of the group
+      par[b]=a;//larger size component's leader will become the overall leader of both the groups
+   }
+   //finding minimum and maximum value of the group helps in finding maximum absolute difference of a group
+   else
+   {
+      sz[b]=sz[b]+sz[a];//the smaller size is added into larger one
+      mx[b]=max(mx[b],mx[a]);//finding minimum value of the group
+      mn[b]=min(mn[b],mn[a]);//finding maximum value of the group
+      par[a]=b;//larger size component's leader will become the overall leader of both the groups
+   }
+}
+ll power(ll a,ll b){
+    if(b==0){
+        return 1;
+    }
+    ll temp=power(a,b/2)%mod;
+    if(b%2==0){
+        return (temp*temp)%mod;
+    }
+    else{
+        return ((a*temp)%mod*temp)%mod;
+    }
+}
+ll lcm(ll a,ll b)
+{
+    return (a*b)/__gcd(a,b);
+}
+void printDivisors(ll n) 
+{ 
+    for (int i=1; i<=sqrt(n); i++) 
+    { 
+        if (n%i == 0) 
+        { 
+            if (n/i == i) 
+                printf("%d ", i); 
+  
+            else 
+                printf("%d %d ", i, n/i); 
+        } 
+    } 
+} 
+bool isPrime(ll n) 
+{ 
+    if (n <= 1)  return false; 
+    if (n <= 3)  return true; 
+    if (n%2 == 0 || n%3 == 0) return false; 
+  
+    for (int i=5; i*i<=n; i=i+6) 
+        if (n%i == 0 || n%(i+2) == 0) 
+           return false; 
+    return true; 
+} 
+int main() {
+    fastio
+ int t;
+ cin>>t;
+ while(t--)
+ {
+     vector<ll>v;
+     ll a,b,c;
+     cin>>a>>b>>c;
+     v.pb(a);
+     v.pb(b);
+     v.pb(c);
+     sort(v.begin(),v.end());
+     if(v[0]+v[1]>v[2])
+     {
+         cout<<"YES"<<' ';
+        long double s=(v[0]+v[1]+v[2])/2;
+         long double ans=sqrt(s*(s-v[0])(s-v[1])(s-v[2]));
+         cout<<fixed<<setprecision(5)<<ans<<'\n';
+     }
+     else
+     cout<<"NO"<<'\n';
+ }
+}
