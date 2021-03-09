@@ -1,0 +1,17 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main() {
+	int N,x,sum;string str;cin>>N;
+	for(int i=0;i<N;i++){  
+		sum=0;                   //main logic begins 
+		cin>>str;                
+		x=str.length()-1;        
+		for(int j=0;j<=x;j++){   
+			if(str[j]=='1'){     
+				sum=sum+pow(2,x-j);
+			}                    
+		}
+		cout<<sum<<"\n";
+	}
+	return 0;
+}
