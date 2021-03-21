@@ -1,0 +1,69 @@
+//Naive Approach.. O(n^2)
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int maxSum=nums[0];
+        int currSum=0;
+        if(nums.size()==1)
+            return nums[0];
+        int n=nums.size();
+        for(int i=0;i<n;i++){
+                currSum=0;
+            for(int j=i;j<n;j++){
+               currSum+=nums[j];
+                maxSum=max(maxSum,currSum);
+            }
+      }
+      return maxSum;
+    }
+};
+
+//Solutions at O(n)
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+         int temp=nums[0],i,j,sum=nums[0];
+    for(i=1;i<nums.size();i++){
+        
+        if(sum+nums[i]>=sum && sum+nums[i]>=nums[i]){
+            sum+=nums[i];
+        }
+        
+        else if(sum+nums[i]<=sum && sum+nums[i]>=nums[i]){
+            
+            if(temp<=sum){
+                temp=sum;
+            }
+            sum+=nums[i];
+        }
+        else {
+            if(temp<=sum){
+                temp=sum;
+            }
+            sum=nums[i];
+        }
+    }
+    
+    return (temp>=sum)?temp:sum;
+    
+    }
+};
+
+
+//After modifying The Above code (Kadanes Algorithm)..
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int m1=nums[0],m2=nums[0];
+        if(nums.size()==0)
+            return 0;
+        for(int i=1;i<nums.size();i++)
+        {
+            m2=max(m2+nums[i],nums[i]);
+            m1=max(m1,m2);
+        }
+        return m1;
+    }
+};
+
