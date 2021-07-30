@@ -92,8 +92,42 @@ int main() {
         cout<<arr[k]<<" "; 
 }
 
-
-
+//using cummulative Sum
+#include <iostream>
+using namespace std;
+int main() {
+    //cout<<"Hello World!";
+    int n;
+    int left=0,right=0;
+    //cout<<"Enter the Size of array";
+    cin>>n;
+    int currSum;
+    int maxSum=0;
+    int arr[1000],csum[1000];
+    cin>>arr[0];
+    csum[0]=arr[0];
+    //cout<<"Enter the elements"<<endl;
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+        csum[i]=csum[i-1]+arr[i];
+    }
+    for(int i=0;i<n;i++){
+        for(int j=i;j<n;j++){
+            //elements of current subarray (i,j)
+            currSum=0;
+            currSum=csum[j]-csum[i-1];
+            if(maxSum<currSum){
+                maxSum=currSum;
+                left=i;
+                right=j;
+            }
+        //cout<<endl;
+        }
+    }
+    cout<<maxSum<<endl;
+    for(int k=left;k<=right;k++)
+        cout<<arr[k]<<" "; 
+}
 
 
 
