@@ -57,6 +57,52 @@ public:
     }
 };
 
+#include <iostream>
+using namespace std;
+int main() {
+    //cout<<"Hello World!";
+    int n;
+    int left=0,right=0;
+    //cout<<"Enter the Size of array";
+    cin>>n;
+    int currSum;
+    int maxSum=0;
+    int arr[1000];
+    //cout<<"Enter the elements"<<endl;
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    for(int i=0;i<n;i++){
+        for(int j=i;j<n;j++){
+            //elements of current subarray (i,j)
+            currSum=0;
+            for(int k=i;k<=j;k++){
+               currSum+=arr[k];
+            }
+            if(maxSum<currSum){
+                maxSum=currSum;
+                left=i;
+                right=j;
+            }
+        //cout<<endl;
+        }
+    }
+    cout<<maxSum<<endl;
+    for(int k=left;k<=right;k++)
+        cout<<arr[k]<<" "; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 //After modifying The Above code (Kadanes Algorithm)..
 
