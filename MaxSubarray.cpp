@@ -129,7 +129,34 @@ int main() {
         cout<<arr[k]<<" "; 
 }
 
-
+//Kadanes algo
+#include <iostream>
+using namespace std;
+int main() {
+    //cout<<"Hello World!";
+    int n;
+    int left=0,right=0;
+    //cout<<"Enter the Size of array";
+    cin>>n;
+    int cs;
+    int maxSum=0;
+    int arr[1000];
+    cin>>arr[0];
+    //cout<<"Enter the elements"<<endl;
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    
+    }
+    for(int i=0;i<n;i++){
+        cs+=arr[i];
+        if(cs<0)
+            cs=0;
+        maxSum=max(maxSum,cs);
+        
+    }
+    cout<<maxSum<<endl;
+     
+}
 
 
 
