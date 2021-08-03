@@ -1,62 +1,4 @@
-// O(n^2)
-class Solution {
-public:
-    int maxSubArray(vector<int>& nums) {
-        int maxSum=-100001;
-        int currSum=0;
-        int n=nums.size();
-        
-        for(int i=1; i<n ;i++){
-            nums[i]=nums[i-1]+nums[i];
-        }
-        
-        if(nums.size()==1)
-            return nums[0];
-        
-        for(int i=0;i<n;i++){
-            currSum=0;
-            maxSum=max(maxSum,nums[i]);
-            for(int j=i+1;j<n;j++){
-               currSum=nums[j]-nums[i];
-                maxSum=max(maxSum,currSum);
-            }
-            
-      }
-      return maxSum;
-    }
-};
-
-//Solutions at O(n)
-class Solution {
-public:
-    int maxSubArray(vector<int>& nums) {
-         int temp=nums[0],i,j,sum=nums[0];
-    for(i=1;i<nums.size();i++){
-        
-        if(sum+nums[i]>=sum && sum+nums[i]>=nums[i]){
-            sum+=nums[i];
-        }
-        
-        else if(sum+nums[i]<=sum && sum+nums[i]>=nums[i]){
-            
-            if(temp<=sum){
-                temp=sum;
-            }
-            sum+=nums[i];
-        }
-        else {
-            if(temp<=sum){
-                temp=sum;
-            }
-            sum=nums[i];
-        }
-    }
-    
-    return (temp>=sum)?temp:sum;
-    
-    }
-};
-
+//O(n^3)
 #include <iostream>
 using namespace std;
 int main() {
@@ -92,7 +34,7 @@ int main() {
         cout<<arr[k]<<" "; 
 }
 
-//using cummulative Sum
+//using cummulative Sum O(n^2)
 #include <iostream>
 using namespace std;
 int main() {
@@ -157,12 +99,6 @@ int main() {
     cout<<maxSum<<endl;
      
 }
-
-
-
-
-
-
 
 
 //After modifying The Above code (Kadanes Algorithm)..
